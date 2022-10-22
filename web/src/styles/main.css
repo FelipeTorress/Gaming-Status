@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#card-game {
+    justify-content:center;
+    aling-items:center;
+    position:relative;
+    display: flex;
+    transition: 0.5s;
+    overflow:hidden;
+    border-radius: 0.5rem
+}
+
+#card-game:hover {
+    transform: translateY(-15px);
+}
+
+#card-game::before {
+    content: '';
+    position:absolute;
+    width:9rem;
+    height:170%;
+    margin-top:-40px;
+    background: white;
+    animation: animate 4s linear infinite;
+}
+
+#card-game::after {
+    content: '';
+    position:absolute;
+    inset:4px;
+}
+
+@keyframes animate{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(350deg);
+    }
+}
