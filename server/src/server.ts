@@ -1,5 +1,7 @@
 import express from "express";
 import cors from 'cors';
+import dotenv from 'dotenv';
+import axios from 'axios';
 
 import { PrismaClient } from '@prisma/client';
 import { convertTimeStringToMinutes } from "./utils/convert-time-string-to-minutes";
@@ -93,6 +95,39 @@ app.get('/ads/:id/contact', async (request, response)=>{
 
     return response.json({
         discord: ad.discord , Whatsapp: ad.Whatsapp, instagram: ad.instagram
+    });
+});
+
+app.get("/summoner/:summonerName", async (request, response) => { //saber se existe e pegar ppuid
+    var resposeTotal:any = {}
+    var summonerName = request.params.summonerName;
+
+    const result = dotenv.config();
+    if (result.error) {
+        throw result.error;
+    }
+    const keys:any = result.parsed;
+
+    var ApiCallString = keys['LOL_URL_BR1'] + keys['LOL_BY_NAME'] + `/${encodeURI(summonerName)}` + "?api_key=" + keys['LOL_KEY'];
+    await axios.get(ApiCallString).then((res)=>{
+        resposeTotal['id'] = res.data.id;
+        resposeTotal['accountId'] = res.data.accountId;
+        resposeTotal['name'] = res.data.name;
+        resposeTotal['profileIconId'] = res.data.profileIconId;
+        resposeTotal['summonerLevel'] = res.data.summonerLevel;
+    });
+
+    ApiCallString = keys['LOL_URL_BR1'] + keys['LOL_MASTERY'] + `/${resposeTotal.id}` + "?api_key=" + keys['LOL_KEY'];
+    console.log(ApiCallString);
+    await axios.get(ApiCallString).then((res)=>{
+        resposeTotal['top3_mastery_champions'] = res.data.slice(0, 3);
+    });
+
+    ApiCallString = keys['LOL_URL_BR1'] + keys['LOL_ELO'] +`/${resposeTotal.id}` + "?api_key=" + keys['LOL_KEY'];
+    console.log(ApiCallString);
+    await axios.get(ApiCallString).then((res)=>{
+        resposeTotal['elo'] = res.data;
+        return response.json(resposeTotal);
     });
 });
 
