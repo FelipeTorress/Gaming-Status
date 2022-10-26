@@ -10,13 +10,11 @@ import { useNavigate } from "react-router-dom";
 
 function LolStatus(){
     const navigate = useNavigate();
-
     async function handleSearchPlayer(event:FormEvent) {
         event.preventDefault()
-        const [player, setPlayer] = useState({});
         const formData = new FormData(event.target as HTMLFormElement);
         const data = Object.fromEntries(formData);
-        navigate("/player", { NickName: data.NickName} as never );
+        navigate(`/player/${data.NickName}`);
     }
 
     return (
