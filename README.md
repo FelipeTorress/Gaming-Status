@@ -41,4 +41,4 @@
 
 ## Atenções ❗❗
 - A key da API do lol tem duração de um dia, logo é necessário ficar atualizando ela no arquivo ".env" do server
-- A interface tomou como base o projeot nlw-Esports da RocketSeat (https://www.figma.com/file/eQvcANpV8msFSJfQShA8hs/NLW-eSports-(Community)) porem a ideia foi incrementada, no entanto não finalizada.
+- A interface tomou como base o projeto nlw-Esports da RocketSeat (https://www.figma.com/file/eQvcANpV8msFSJfQShA8hs/NLW-eSports-(Community)) porem a ideia foi incrementada, no entanto não finalizada.
